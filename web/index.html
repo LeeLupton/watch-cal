@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" data-vigilance="BASELINE">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anniversary Watch Calendar — 2026–2027</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="alert-bar" id="alert-bar" aria-live="polite">
+    <div class="alert-marquee" id="alert-marquee"></div>
+  </div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <div>
+        <div class="brand-title">Anniversary Watch</div>
+        <div class="brand-sub">Vigilance posture board · 2026–2027</div>
+      </div>
+    </div>
+
+    <div class="status">
+      <div class="status-pill" id="current-pill">
+        <span class="pulse" aria-hidden="true"></span>
+        <span class="status-level" id="current-level">BASELINE</span>
+      </div>
+      <div class="status-meta">
+        <div class="status-date" id="current-date">—</div>
+        <div class="status-context" id="current-context">No active anniversaries</div>
+      </div>
+    </div>
+
+    <div class="topbar-actions">
+      <button class="btn" id="btn-today" title="Jump to today">Today</button>
+      <button class="btn" id="btn-sound" title="Toggle audio cues" aria-pressed="false">Sound: off</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <section class="panel">
+        <h2>Year</h2>
+        <div class="year-tabs" id="year-tabs"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Strand filter</h2>
+        <div class="strand-list" id="strand-list"></div>
+        <div class="strand-help">
+          Switch the heatmap to one strand's vigilance, or keep <em>Overall</em>.
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Legend</h2>
+        <ul class="legend">
+          <li><span class="sw sw-CRITICAL"></span> Critical · T-30</li>
+          <li><span class="sw sw-ELEVATED"></span> Elevated · T-14</li>
+          <li><span class="sw sw-MODERATE"></span> Moderate · T-7</li>
+          <li><span class="sw sw-BASELINE"></span> Baseline · T-3</li>
+          <li><span class="sw sw-NONE"></span> Quiet</li>
+        </ul>
+      </section>
+
+      <section class="panel" id="standing-orders-panel">
+        <h2>Standing orders</h2>
+        <div class="orders" id="standing-orders"></div>
+      </section>
+    </aside>
+
+    <section class="content">
+      <div class="content-header">
+        <button class="btn icon" id="prev-month" aria-label="Previous month">‹</button>
+        <h2 class="month-title" id="month-title">—</h2>
+        <button class="btn icon" id="next-month" aria-label="Next month">›</button>
+
+        <div class="content-tools">
+          <label class="toggle">
+            <input type="checkbox" id="show-postures" checked />
+            <span>Show posture days</span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="show-windows" checked />
+            <span>Show compound windows</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="month-grid" id="month-grid" aria-label="Month calendar"></div>
+
+      <div class="year-strip-wrap">
+        <h3>Year heatmap</h3>
+        <div class="year-strip" id="year-strip"></div>
+      </div>
+    </section>
+
+    <aside class="detail" id="detail">
+      <header class="detail-header">
+        <h2 id="detail-date">Select a day</h2>
+        <div class="detail-pill" id="detail-pill">—</div>
+      </header>
+
+      <section class="detail-section" id="detail-events-sec">
+        <h3>Anniversaries on this day</h3>
+        <ul class="detail-list" id="detail-events"></ul>
+      </section>
+
+      <section class="detail-section" id="detail-postures-sec">
+        <h3>Active posture phases</h3>
+        <ul class="detail-list" id="detail-postures"></ul>
+      </section>
+
+      <section class="detail-section" id="detail-windows-sec">
+        <h3>Compound windows</h3>
+        <ul class="detail-list" id="detail-windows"></ul>
+      </section>
+
+      <section class="detail-section" id="detail-strands-sec">
+        <h3>Strand contribution</h3>
+        <div class="strand-bars" id="detail-strands"></div>
+      </section>
+
+      <section class="detail-section detail-section--horizon">
+        <h3>Next on horizon <span class="horizon-sub">(not the cause of this day's posture)</span></h3>
+        <div class="next-critical" id="next-critical">—</div>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <span>Schema v<span id="schema-version"></span> · generated <span id="generated"></span></span>
+    <span>U//FOUO · Educational/Analytic — does not predict specific attacks.</span>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
