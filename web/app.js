@@ -399,7 +399,7 @@ function renderStandingOrders(lvl) {
   const orders = STANDING_ORDERS[lvl] || STANDING_ORDERS.NONE;
   const el = document.getElementById('standing-orders');
   el.innerHTML = `
-    <span class="lvl-tag">${lvl}</span>
+    <span class="lvl-tag lvl-${lvl}">${lvl}</span>
     <strong style="margin-left:8px;font-size:13px;">${orders.heading}</strong>
     <ul>${orders.bullets.map(b => `<li>${b}</li>`).join('')}</ul>
   `;
@@ -755,7 +755,8 @@ function renderStrandPanel() {
 
 function renderYearTabs() {
   const tabs = document.getElementById('year-tabs');
-  tabs.innerHTML = [2026, 2027].map(y => `
+  const years = getAvailableYears();
+  tabs.innerHTML = years.map(y => `
     <button class="year-tab ${state.year === y ? 'active' : ''}" data-year="${y}">${y}</button>
   `).join('');
 
@@ -770,6 +771,19 @@ function renderYearTabs() {
       renderDetail(state.selectedKey);
     });
   });
+}
+
+function getAvailableYears() {
+  const years = new Set([state.year, today.getFullYear()]);
+  for (const key of Object.keys(state.dayIndex || {})) {
+    const year = Number(key.slice(0, 4));
+    if (year) years.add(year);
+  }
+  for (const key of Object.keys(state.reutersByDate || {})) {
+    const year = Number(key.slice(0, 4));
+    if (year) years.add(year);
+  }
+  return [...years].sort((a, b) => a - b);
 }
 
 /* =========================================================

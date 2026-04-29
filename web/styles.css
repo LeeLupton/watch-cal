@@ -323,9 +323,34 @@ html[data-vigilance="CRITICAL"] .alert-marquee { animation-duration: 14s; }
   font-size: 10px;
   font-weight: 700;
   letter-spacing: .08em;
-  background: var(--lvl-current-soft, var(--lvl-BASELINE-soft));
-  color: var(--lvl-current, var(--lvl-BASELINE));
-  border: 1px solid var(--lvl-current, var(--lvl-BASELINE));
+  background: var(--lvl-BASELINE-soft);
+  color: var(--lvl-BASELINE);
+  border: 1px solid var(--lvl-BASELINE);
+}
+.orders .lvl-tag.lvl-NONE {
+  background: var(--lvl-NONE-soft);
+  color: var(--text-faint);
+  border-color: var(--line);
+}
+.orders .lvl-tag.lvl-BASELINE {
+  background: var(--lvl-BASELINE-soft);
+  color: var(--lvl-BASELINE);
+  border-color: var(--lvl-BASELINE);
+}
+.orders .lvl-tag.lvl-MODERATE {
+  background: var(--lvl-MODERATE-soft);
+  color: var(--lvl-MODERATE);
+  border-color: var(--lvl-MODERATE);
+}
+.orders .lvl-tag.lvl-ELEVATED {
+  background: var(--lvl-ELEVATED-soft);
+  color: var(--lvl-ELEVATED);
+  border-color: var(--lvl-ELEVATED);
+}
+.orders .lvl-tag.lvl-CRITICAL {
+  background: var(--lvl-CRITICAL-soft);
+  color: var(--lvl-CRITICAL);
+  border-color: var(--lvl-CRITICAL);
 }
 
 /* =========================================================

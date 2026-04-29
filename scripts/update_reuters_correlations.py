@@ -23,10 +23,12 @@ from collections import defaultdict
 from pathlib import Path
 
 
-DEFAULT_SOURCE_INDEXES = (
+ROLLING_SOURCE_INDEXES = (
     "https://www.reuters.com/arc/outboundfeeds/news-sitemap-index/?outputType=xml",
     "https://www.reuters.com/arc/outboundfeeds/sitemap-index/?outputType=xml",
 )
+DEFAULT_START_DATE = "2025-05-01"
+DEFAULT_DAILY_SITEMAP_TEMPLATE = "https://www.reuters.com/arc/outboundfeeds/sitemap3/{date}/?outputType=xml"
 
 NS = {
     "sm": "http://www.sitemaps.org/schemas/sitemap/0.9",
@@ -250,14 +252,33 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--web-out", default="web/reuters-data.js", help="Browser JS output")
     parser.add_argument("--as-of", default=dt.date.today().isoformat(), help="Exclusive past-date cutoff, YYYY-MM-DD")
     parser.add_argument(
+        "--start-date",
+        default=DEFAULT_START_DATE,
+        help="Inclusive historical coverage start date for Reuters day-sitemap backfill, YYYY-MM-DD",
+    )
+    parser.add_argument(
         "--source-index",
         action="append",
         dest="source_indexes",
-        help="Reuters sitemap index URL. Repeat to add sources. Defaults to Reuters XML feeds from robots.txt.",
+        help="Optional Reuters rolling sitemap index URL. Repeat to add sources.",
     )
+    parser.add_argument(
+        "--include-rolling-indexes",
+        action="store_true",
+        help="Also fetch Reuters rolling XML sitemap indexes from robots.txt.",
+    )
+    parser.add_argument(
+        "--daily-sitemap-template",
+        default=DEFAULT_DAILY_SITEMAP_TEMPLATE,
+        help="Reuters daily sitemap URL template. Use {date} for YYYY-MM-DD.",
+    )
+    parser.add_argument("--no-daily-sitemaps", action="store_true", help="Skip Reuters day-sitemap backfill")
+    parser.add_argument("--no-source-indexes", action="store_true", help="Skip Reuters rolling sitemap indexes")
+    parser.add_argument("--max-days", type=int, default=0, help="Limit fetched active day sitemaps; 0 means no limit")
     parser.add_argument("--max-sitemaps", type=int, default=0, help="Limit fetched child sitemaps per source; 0 means no limit")
     parser.add_argument("--max-urls", type=int, default=0, help="Limit processed article URLs; 0 means no limit")
     parser.add_argument("--sleep", type=float, default=0.05, help="Seconds to sleep between sitemap requests")
+    parser.add_argument("--timeout", type=int, default=12, help="HTTP timeout in seconds for Reuters sitemap requests")
     return parser.parse_args()
 
 
@@ -280,6 +301,192 @@ def daterange(start: dt.date, end: dt.date):
     while cur <= end:
         yield cur
         cur += dt.timedelta(days=1)
+
+
+def anniversary_suffix(value: int) -> str:
+    if 10 <= value % 100 <= 20:
+        return "th"
+    return {1: "st", 2: "nd", 3: "rd"}.get(value % 10, "th")
+
+
+def retarget_anniversary_name(name: str, year_origin: int | None, target_year: int) -> str:
+    if not year_origin:
+        return name
+    anniversary = target_year - int(year_origin)
+    if anniversary <= 0:
+        return name
+    label = f"{anniversary}{anniversary_suffix(anniversary)} anniv."
+    return re.sub(r"\d+(?:st|nd|rd|th) anniv\.", label, name, count=1)
+
+
+def projection_stem(name: str) -> str:
+    stem = re.sub(r"\s*\(\d+(?:st|nd|rd|th) anniv\.\)", "", name, flags=re.IGNORECASE)
+    stem = re.sub(r"\s+", " ", stem.lower())
+    return stem.strip()
+
+
+def retarget_date_value(value: str, target_year: int) -> str | None:
+    if "~" in value:
+        return None
+    parts = value.split("/")
+    retargeted: list[str] = []
+    for part in parts:
+        try:
+            source_date = parse_date(part)
+            retargeted.append(dt.date(target_year, source_date.month, source_date.day).isoformat())
+        except ValueError:
+            return None
+    return "/".join(retargeted)
+
+
+def active_span_for_event(event: dict) -> tuple[dt.date, dt.date]:
+    start, end = parse_date_range(event["date"])
+    level = event.get("vigilance_overall", "NONE")
+    lead = int(event.get("lead_time_days") or LEAD_DAYS.get(level, 0))
+    return start - dt.timedelta(days=lead), end
+
+
+def ranges_overlap(left_start: dt.date, left_end: dt.date, right_start: dt.date, right_end: dt.date) -> bool:
+    return left_start <= right_end and right_start <= left_end
+
+
+def event_projection_key(event: dict) -> tuple[int, int, str]:
+    start, _ = parse_date_range(event["date"])
+    return start.month, start.day, projection_stem(event.get("name", ""))
+
+
+def window_projection_key(window: dict) -> tuple[int, int, int, int, str]:
+    start = parse_date(window["start"])
+    end = parse_date(window["end"])
+    label = re.sub(r"\b20\d{2}\b", "", window.get("label", ""))
+    label = re.sub(r"\s+", " ", label.lower()).strip()
+    return start.month, start.day, end.month, end.day, label
+
+
+def project_calendar_history(calendar: dict, start_date: dt.date, end_date: dt.date) -> tuple[dict, dict]:
+    """Add recurring Gregorian watch context before the shipped 2026/2027 calendar.
+
+    The source calendar intentionally focuses on 2026-2027, but Reuters backfill
+    needs the same recurring Gregorian anniversaries when matching older dates.
+    Hijri/approximate dates are left untouched because projecting them by the
+    Gregorian year would be misleading.
+    """
+
+    projected = dict(calendar)
+    projected_events = [dict(event) for event in calendar.get("events", [])]
+    projected_windows = [dict(window) for window in calendar.get("compound_windows", [])]
+
+    target_years = range(start_date.year, end_date.year + 1)
+    coverage_start = start_date
+    coverage_end = end_date
+
+    base_events: dict[tuple[int, int, str], dict] = {}
+    existing_events: set[tuple[str, str]] = set()
+    for event in calendar.get("events", []):
+        if event.get("type") != "Gregorian":
+            continue
+        if "~" in event.get("date", "") or "/" in event.get("date", ""):
+            continue
+        try:
+            start, _ = parse_date_range(event["date"])
+        except ValueError:
+            continue
+
+        key = event_projection_key(event)
+        existing_events.add((event["date"], key[2]))
+        current = base_events.get(key)
+        if not current:
+            base_events[key] = event
+            continue
+        current_start, _ = parse_date_range(current["date"])
+        if start < current_start:
+            base_events[key] = event
+
+    added_events = 0
+    for key, event in base_events.items():
+        for year in target_years:
+            retargeted_date = retarget_date_value(event["date"], year)
+            if not retargeted_date or (retargeted_date, key[2]) in existing_events:
+                continue
+
+            clone = dict(event)
+            clone["date"] = retargeted_date
+            clone["name"] = retarget_anniversary_name(
+                event.get("name", ""),
+                event.get("year_origin"),
+                year,
+            )
+            clone["historical_projection"] = True
+            clone["projected_from_date"] = event["date"]
+
+            active_start, active_end = active_span_for_event(clone)
+            if not ranges_overlap(active_start, active_end, coverage_start, coverage_end):
+                continue
+
+            projected_events.append(clone)
+            existing_events.add((retargeted_date, key[2]))
+            added_events += 1
+
+    base_windows: dict[tuple[int, int, int, int, str], dict] = {}
+    existing_windows: set[tuple[str, str, str]] = set()
+    for window in calendar.get("compound_windows", []):
+        try:
+            start = parse_date(window["start"])
+            parse_date(window["end"])
+        except ValueError:
+            continue
+        if any("~" in str(window.get(part, "")) for part in ("start", "end")):
+            continue
+        if any(retarget_date_value(anchor, start.year) is None for anchor in window.get("anchor_dates", [])):
+            continue
+
+        key = window_projection_key(window)
+        existing_windows.add((window["start"], window["end"], key[4]))
+        current = base_windows.get(key)
+        if not current:
+            base_windows[key] = window
+            continue
+        current_start = parse_date(current["start"])
+        if start < current_start:
+            base_windows[key] = window
+
+    added_windows = 0
+    for key, window in base_windows.items():
+        for year in target_years:
+            retargeted_start = retarget_date_value(window["start"], year)
+            retargeted_end = retarget_date_value(window["end"], year)
+            if not retargeted_start or not retargeted_end:
+                continue
+            if (retargeted_start, retargeted_end, key[4]) in existing_windows:
+                continue
+
+            start = parse_date(retargeted_start)
+            end = parse_date(retargeted_end)
+            if not ranges_overlap(start, end, coverage_start, coverage_end):
+                continue
+
+            clone = dict(window)
+            clone["start"] = retargeted_start
+            clone["end"] = retargeted_end
+            clone["year"] = year
+            clone["id"] = re.sub(r"\b20\d{2}\b", str(year), window.get("id", ""))
+            if clone["id"] == window.get("id", ""):
+                clone["id"] = f"{window.get('id', 'CW')}-{year}"
+            clone["anchor_dates"] = [
+                retargeted
+                for anchor in window.get("anchor_dates", [])
+                if (retargeted := retarget_date_value(anchor, year))
+            ]
+            clone["historical_projection"] = True
+            clone["projected_from_id"] = window.get("id")
+
+            projected_windows.append(clone)
+            existing_windows.add((retargeted_start, retargeted_end, key[4]))
+            added_windows += 1
+
+    projected["events"] = projected_events
+    projected["compound_windows"] = projected_windows
+    return projected, {"events": added_events, "compound_windows": added_windows}
 
 
 def ensure_entry(index: dict[str, dict], key: str) -> dict:
@@ -458,7 +665,7 @@ def parse_article_node(node: ET.Element) -> dict | None:
     title = child_text(node, "news:news/news:title") or title_from_url(url)
     publication_value = child_text(node, "news:news/news:publication_date") or child_text(node, "sm:lastmod")
     published_at = parse_datetime(publication_value)
-    published_date = published_at.date() if published_at else date_from_url(url)
+    published_date = date_from_url(url) or (published_at.date() if published_at else None)
     if not published_date:
         return None
 
@@ -509,6 +716,56 @@ def iter_articles(source_indexes: list[str], max_sitemaps: int, max_urls: int, s
                     yield article
             if sleep:
                 time.sleep(sleep)
+
+
+def active_watch_dates(watch_index: dict[str, dict], start_date: dt.date, as_of: dt.date) -> list[dt.date]:
+    dates: list[dt.date] = []
+    for key, entry in watch_index.items():
+        day = dt.date.fromisoformat(key)
+        if start_date <= day < as_of and LEVEL_RANK.get(entry.get("level", "NONE"), 0) > 0:
+            dates.append(day)
+    return sorted(set(dates))
+
+
+def iter_daily_sitemap_articles(
+    dates: list[dt.date],
+    template: str,
+    max_days: int,
+    max_urls: int,
+    sleep: float,
+    timeout: int,
+    failures: list[dict],
+):
+    processed_urls = 0
+    for idx, day in enumerate(dates, 1):
+        if max_days and idx > max_days:
+            return
+        if max_urls and processed_urls >= max_urls:
+            return
+
+        sitemap_url = template.format(date=day.isoformat())
+        try:
+            root = fetch_xml(sitemap_url, timeout=timeout)
+        except urllib.error.HTTPError as exc:
+            failures.append({"date": day.isoformat(), "url": sitemap_url, "error": f"HTTP {exc.code}"})
+            log(f"warning: could not read day sitemap {day}: HTTP {exc.code}")
+            continue
+        except (TimeoutError, urllib.error.URLError, ET.ParseError, ValueError) as exc:
+            failures.append({"date": day.isoformat(), "url": sitemap_url, "error": str(exc)})
+            log(f"warning: could not read day sitemap {day}: {exc}")
+            continue
+
+        nodes = root.findall("sm:url", NS)
+        log(f"  day sitemap {idx}/{len(dates)} {day}: {len(nodes)} urls")
+        for node in nodes:
+            if max_urls and processed_urls >= max_urls:
+                return
+            article = parse_article_node(node)
+            processed_urls += 1
+            if article:
+                yield article
+        if sleep:
+            time.sleep(sleep)
 
 
 def find_terms(haystack: str, terms: tuple[str, ...]) -> list[str]:
@@ -677,13 +934,48 @@ def write_outputs(payload: dict, out_path: Path, web_out_path: Path) -> None:
 def main() -> int:
     args = parse_args()
     as_of = dt.date.fromisoformat(args.as_of)
-    source_indexes = args.source_indexes or list(DEFAULT_SOURCE_INDEXES)
+    start_date = dt.date.fromisoformat(args.start_date)
+    if start_date >= as_of:
+        log(f"error: --start-date ({start_date}) must be before --as-of ({as_of})")
+        return 2
+    source_indexes: list[str] = []
+    if args.include_rolling_indexes:
+        source_indexes.extend(ROLLING_SOURCE_INDEXES)
+    if args.source_indexes:
+        source_indexes.extend(args.source_indexes)
+    if args.no_source_indexes:
+        source_indexes = []
 
     calendar_path = Path(args.calendar)
     calendar = json.loads(calendar_path.read_text(encoding="utf-8"))
-    watch_index = build_watch_index(calendar)
+    matching_calendar, projection_stats = project_calendar_history(
+        calendar,
+        start_date,
+        as_of - dt.timedelta(days=1),
+    )
+    watch_index = build_watch_index(matching_calendar)
+    daily_dates = active_watch_dates(watch_index, start_date, as_of)
 
     deduped: dict[str, dict] = {}
+    daily_failures: list[dict] = []
+    if not args.no_daily_sitemaps:
+        log(f"source: Reuters day sitemaps ({len(daily_dates)} active dates from {start_date} to {as_of - dt.timedelta(days=1)})")
+        for raw_article in iter_daily_sitemap_articles(
+            daily_dates,
+            args.daily_sitemap_template,
+            args.max_days,
+            args.max_urls,
+            args.sleep,
+            args.timeout,
+            daily_failures,
+        ):
+            entry = watch_index.get(raw_article["date"])
+            if not entry:
+                continue
+            correlated = classify_article(raw_article, entry, as_of)
+            if correlated:
+                dedupe_articles(deduped, correlated)
+
     for raw_article in iter_articles(source_indexes, args.max_sitemaps, args.max_urls, args.sleep):
         entry = watch_index.get(raw_article["date"])
         if not entry:
@@ -707,12 +999,18 @@ def main() -> int:
         "schema_version": "1.0",
         "generated": dt.datetime.now(dt.UTC).isoformat(timespec="seconds").replace("+00:00", "Z"),
         "as_of": as_of.isoformat(),
+        "start_date": start_date.isoformat(),
         "source_indexes": source_indexes,
-        "method": "Reuters XML sitemap metadata matched to active watch-calendar days by strand and threat terms.",
+        "daily_sitemap_template": None if args.no_daily_sitemaps else args.daily_sitemap_template,
+        "method": "Reuters XML sitemap metadata matched to active watch-calendar days by strand and threat terms. Gregorian watch anniversaries are projected backward for historical Reuters backfill; Hijri/approximate dates are not projected.",
+        "projection_stats": projection_stats,
+        "active_dates_scanned": len(daily_dates) if not args.no_daily_sitemaps else 0,
+        "daily_sitemap_failures": daily_failures,
         "items": items,
         "counts": {
             "items": len(items),
             "dates": len(by_date),
+            "daily_sitemap_failures": len(daily_failures),
             "by_confidence": dict(sorted(by_confidence.items())),
             "by_date": dict(sorted(by_date.items())),
         },
