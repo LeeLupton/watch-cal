@@ -197,6 +197,8 @@ let state = {
   data: null,
   dayIndex: null,
   strandIndex: null, // per-strand day maps (built lazily below)
+  reuters: null,
+  reutersByDate: {},
   year: today.getFullYear(),
   month: today.getMonth(),
   selectedKey: toKey(today),
@@ -247,11 +249,127 @@ function buildStrandIndex(dayIndex) {
   return result;
 }
 
+const todayKey = toKey(today);
+
+function isPast(key) {
+  return key < todayKey;
+}
+
 function getDayLevel(key) {
+  if (isPast(key)) return 'NONE';
   if (state.activeStrand === 'overall') {
     return state.dayIndex[key]?.level || 'NONE';
   }
   return state.strandIndex[state.activeStrand]?.[key]?.level || 'NONE';
+}
+
+function getHistoricalDayLevel(key) {
+  if (state.activeStrand === 'overall') {
+    return state.dayIndex[key]?.level || 'NONE';
+  }
+  return state.strandIndex[state.activeStrand]?.[key]?.level || 'NONE';
+}
+
+/* =========================================================
+   Reuters correlation helpers
+   ========================================================= */
+
+function escapeHtml(value) {
+  return String(value ?? '').replace(/[&<>"']/g, ch => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  }[ch]));
+}
+
+function safeReutersUrl(value) {
+  try {
+    const url = new URL(value, window.location.href);
+    const isReuters = url.hostname === 'reuters.com' || url.hostname.endsWith('.reuters.com');
+    if (url.protocol === 'https:' && isReuters) return url.href;
+  } catch (_) {}
+  return '';
+}
+
+function formatReutersTime(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value || 'Unknown time';
+  return date.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+  });
+}
+
+function buildReutersIndex(reutersData) {
+  const byDate = {};
+  const items = Array.isArray(reutersData) ? reutersData : (reutersData?.items || []);
+  for (const item of items) {
+    if (!item?.date) continue;
+    if (!byDate[item.date]) byDate[item.date] = [];
+    byDate[item.date].push(item);
+  }
+  for (const dayItems of Object.values(byDate)) {
+    dayItems.sort((a, b) => String(b.publication_date || '').localeCompare(String(a.publication_date || '')));
+  }
+  return byDate;
+}
+
+function itemMatchesActiveStrand(item) {
+  if (state.activeStrand === 'overall') return true;
+  return (item.matched_strands || []).includes(state.activeStrand);
+}
+
+function getReutersItems(key) {
+  return (state.reutersByDate[key] || []).filter(itemMatchesActiveStrand);
+}
+
+function renderReutersFeed(key) {
+  const sec = document.getElementById('detail-reuters-sec');
+  const list = document.getElementById('detail-reuters');
+  const items = getReutersItems(key);
+  if (!items.length) {
+    sec.style.display = 'none';
+    list.innerHTML = '';
+    return;
+  }
+
+  sec.style.display = '';
+  list.innerHTML = items.slice(0, 12).map(item => {
+    const url = safeReutersUrl(item.url);
+    const imageUrl = safeReutersUrl(item.image_url);
+    const title = escapeHtml(item.title || 'Reuters story');
+    const section = escapeHtml(item.section || 'Reuters');
+    const confidence = escapeHtml(item.confidence || 'MEDIUM');
+    const strands = (item.matched_strands || [])
+      .map(strand => `<span class="tag reuters-strand">${escapeHtml(strand)}</span>`)
+      .join('');
+    const reasons = (item.match_reasons || []).map(escapeHtml).join(' · ');
+    const watch = (item.matched_watch_events || []).slice(0, 4).map(escapeHtml).join(' · ');
+    const titleNode = url
+      ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${title}</a>`
+      : `<span>${title}</span>`;
+
+    return `
+      <li class="item reuters-item ${imageUrl ? '' : 'no-thumb'}">
+        ${imageUrl ? `<img class="reuters-thumb" src="${escapeHtml(imageUrl)}" alt="" loading="lazy" />` : ''}
+        <div class="reuters-body">
+          <div class="item-title reuters-title">
+            ${titleNode}
+            <span class="tag confidence-${confidence}">${confidence}</span>
+          </div>
+          <div class="item-meta">Reuters · ${section} · ${escapeHtml(formatReutersTime(item.publication_date))}</div>
+          ${strands ? `<div class="item-meta reuters-tags">${strands}</div>` : ''}
+          ${watch ? `<div class="item-notes">Watch context: ${watch}</div>` : ''}
+          ${reasons ? `<div class="item-notes reuters-reasons">Match basis: ${reasons}</div>` : ''}
+        </div>
+      </li>
+    `;
+  }).join('');
 }
 
 /* =========================================================
@@ -416,6 +534,9 @@ function renderDetail(key) {
     strandsSec.style.display = 'none';
   }
 
+  // Reuters retrospective context
+  renderReutersFeed(key);
+
   // Next significant
   const next = findNextSignificant(key);
   const nc = document.getElementById('next-critical');
@@ -518,12 +639,14 @@ function renderMonthGrid() {
     const isAnchor = entry.anchors.length > 0;
     const hasWindow = state.showWindows && entry.windows.length > 0;
     const hasPosture = state.showPostures && entry.postures.length > 0;
+    const reutersCount = getReutersItems(key).length;
 
     const classes = [
       'day',
       isToday ? 'today' : '',
       isSelected ? 'selected' : '',
       isAnchor ? 'day-anchor' : '',
+      reutersCount ? 'has-reuters' : '',
     ].filter(Boolean).join(' ');
 
     const flags = [];
@@ -531,9 +654,10 @@ function renderMonthGrid() {
     else if (hasPosture) flags.push(...[...new Set(entry.postures.map(p => `T-${p.tMinus}`))].slice(0, 2).map(t => `<span class="day-flag">${t}</span>`));
 
     html += `
-      <div class="${classes}" data-level="${lvl}" data-key="${key}" title="${key}">
+      <div class="${classes}" data-level="${lvl}" data-key="${key}" title="${key}${reutersCount ? ` · ${reutersCount} Reuters item${reutersCount !== 1 ? 's' : ''}` : ''}">
         <span class="day-num">${d}</span>
         <div class="day-flags">${flags.join('')}</div>
+        ${reutersCount ? `<span class="day-reuters-count">${reutersCount}</span>` : ''}
         ${hasWindow ? '<div class="day-window-band"></div>' : ''}
       </div>
     `;
@@ -579,7 +703,8 @@ function renderYearStrip() {
         const key = `${state.year}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
         const lvl = getDayLevel(key);
         const isToday = key === todayKey;
-        html += `<div class="ys-cell${isToday ? ' today' : ''}" data-level="${lvl}" data-key="${key}" title="${key}"></div>`;
+        const reutersCount = getReutersItems(key).length;
+        html += `<div class="ys-cell${isToday ? ' today' : ''}${reutersCount ? ' has-reuters' : ''}" data-level="${lvl}" data-key="${key}" data-reuters-count="${reutersCount || ''}" title="${key}${reutersCount ? ` · ${reutersCount} Reuters item${reutersCount !== 1 ? 's' : ''}` : ''}"></div>`;
       }
     }
     html += `</div>`;
@@ -756,6 +881,8 @@ function renderMeta(data) {
   state.data = data;
   state.dayIndex = buildDayIndex(data);
   state.strandIndex = buildStrandIndex(state.dayIndex);
+  state.reuters = window.REUTERS_CORRELATIONS || { items: [] };
+  state.reutersByDate = buildReutersIndex(state.reuters);
 
   renderMeta(data);
   wireControls();
