@@ -1,0 +1,1313 @@
+{
+  "schema_version": "1.0",
+  "generated": "2026-04-29",
+  "vigilance_levels": [
+    "BASELINE",
+    "MODERATE",
+    "ELEVATED",
+    "CRITICAL"
+  ],
+  "lead_time_days": {
+    "BASELINE": 3,
+    "MODERATE": 7,
+    "ELEVATED": 14,
+    "CRITICAL": 30
+  },
+  "strands": {
+    "SJ": "Sunni-jihadist (AQ/ISIS lineage)",
+    "SI": "Shia-Iranian (IRGC/Hezbollah/Axis)",
+    "PAL": "Palestinian (Hamas/PIJ/PFLP)",
+    "MB": "Muslim Brotherhood / political Islamist",
+    "PI": "Pan-Islamist (cross-strand religious symbolism / civilizational grievance)"
+  },
+  "events": [
+    {
+      "date": "2026-01-03",
+      "type": "Gregorian",
+      "year_origin": 2020,
+      "name": "Soleimani / al-Muhandis killing (6th anniv.)",
+      "vigilance_overall": "CRITICAL",
+      "vigilance_by_strand": {
+        "SI": "CRITICAL",
+        "PAL": "ELEVATED",
+        "PI": "MODERATE"
+      },
+      "lead_time_days": 30,
+      "notes": "Highest-tempo recent martyrdom anniversary in Axis ecosystem; Iraqi PMF / IRGC commemorate annually."
+    },
+    {
+      "date": "2026-02-01",
+      "type": "Gregorian",
+      "year_origin": 1979,
+      "name": "Khomeini's return to Iran",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SI": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": "Anchor of Iranian revolutionary identity."
+    },
+    {
+      "date": "2026-02-03",
+      "type": "Gregorian",
+      "year_origin": 2022,
+      "name": "al-Qurayshi killing (4th anniv.)",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "SJ": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": "ISIS leader martyrdom; secondary surge driver."
+    },
+    {
+      "date": "2026-02-11",
+      "type": "Gregorian",
+      "year_origin": 1979,
+      "name": "Victory of the Islamic Revolution",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SI": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": "22 Bahman; Iran national day."
+    },
+    {
+      "date": "2026-02-12",
+      "type": "Gregorian",
+      "year_origin": 1949,
+      "name": "Hassan al-Banna assassination",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "MB": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": "MB founder martyrdom."
+    },
+    {
+      "date": "2026-02-15",
+      "type": "Gregorian",
+      "year_origin": 1989,
+      "name": "Soviet withdrawal from Afghanistan",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "SJ": "MODERATE",
+        "PI": "BASELINE"
+      },
+      "lead_time_days": 7,
+      "notes": "Founding 'victory' of the modern jihadist movement."
+    },
+    {
+      "date": "2026-02-17/2026-03-19",
+      "type": "Hijri",
+      "year_origin": null,
+      "name": "Ramadan 1447 (sustained window)",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SJ": "ELEVATED",
+        "PI": "ELEVATED",
+        "SI": "MODERATE"
+      },
+      "lead_time_days": 14,
+      "notes": "Month-long heightened tempo; jihadist groups historically time operations within."
+    },
+    {
+      "date": "~2026-03-05",
+      "type": "Hijri",
+      "year_origin": null,
+      "name": "17 Ramadan – Battle of Badr",
+      "vigilance_overall": "CRITICAL",
+      "vigilance_by_strand": {
+        "SJ": "CRITICAL",
+        "PI": "ELEVATED"
+      },
+      "lead_time_days": 30,
+      "notes": "Theological license for offensive operations during Ramadan."
+    },
+    {
+      "date": "2026-03-03",
+      "type": "Gregorian",
+      "year_origin": 1924,
+      "name": "Abolition of the Caliphate (102nd anniv.)",
+      "vigilance_overall": "CRITICAL",
+      "vigilance_by_strand": {
+        "SJ": "CRITICAL",
+        "PI": "CRITICAL",
+        "MB": "ELEVATED"
+      },
+      "lead_time_days": 30,
+      "notes": "Single most-cited modern grievance across Sunni Islamist literature."
+    },
+    {
+      "date": "2026-03-11",
+      "type": "Gregorian",
+      "year_origin": 2004,
+      "name": "Madrid bombings",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SJ": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": "EU-domestic AQ-inspired benchmark."
+    },
+    {
+      "date": "~2026-03-13/2026-03-19",
+      "type": "Hijri",
+      "year_origin": null,
+      "name": "Last 10 nights of Ramadan / Laylat al-Qadr",
+      "vigilance_overall": "CRITICAL",
+      "vigilance_by_strand": {
+        "SJ": "CRITICAL",
+        "PI": "ELEVATED"
+      },
+      "lead_time_days": 30,
+      "notes": "Historically elevated operational tempo; ISIS has weaponized this window."
+    },
+    {
+      "date": "~2026-03-20",
+      "type": "Hijri",
+      "year_origin": null,
+      "name": "Eid al-Fitr (1 Shawwal 1447)",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "PI": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": "End of Ramadan; sometimes operational deadline."
+    },
+    {
+      "date": "2026-03-22",
+      "type": "Gregorian",
+      "year_origin": 1928,
+      "name": "MB founding (1928) / Brussels attacks (2016)",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "MB": "ELEVATED",
+        "SJ": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": "Dual-anniversary date; MB founding + ISIS EU operation."
+    },
+    {
+      "date": "2026-04-01",
+      "type": "Gregorian",
+      "year_origin": 1979,
+      "name": "Declaration of the Islamic Republic",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "SI": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": "Iran institutional anniversary."
+    },
+    {
+      "date": "2026-04-09",
+      "type": "Gregorian",
+      "year_origin": 2013,
+      "name": "ISIS public split / announcement",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "SJ": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": "ISIS organizational anniversary."
+    },
+    {
+      "date": "2026-05-02",
+      "type": "Gregorian",
+      "year_origin": 2011,
+      "name": "Bin Laden killed (15th anniv.)",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SJ": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": "AQ generational martyrdom; 15th anniv. is round-number salient."
+    },
+    {
+      "date": "2026-05-15",
+      "type": "Gregorian",
+      "year_origin": 1948,
+      "name": "Nakba Day",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "PAL": "ELEVATED",
+        "PI": "MODERATE",
+        "SI": "MODERATE"
+      },
+      "lead_time_days": 14,
+      "notes": "Mobilization activity recurs annually."
+    },
+    {
+      "date": "2026-05-25",
+      "type": "Gregorian",
+      "year_origin": 2000,
+      "name": "Hezbollah Liberation Day",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "SI": "MODERATE",
+        "PAL": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": "Israeli withdrawal from southern Lebanon."
+    },
+    {
+      "date": "~2026-05-26/~2026-05-27",
+      "type": "Hijri",
+      "year_origin": null,
+      "name": "Eid al-Adha (10 Dhu al-Hijjah 1447)",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "PI": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": "Sacrifice symbolism; recurring framing device."
+    },
+    {
+      "date": "2026-06-05",
+      "type": "Gregorian",
+      "year_origin": 1967,
+      "name": "Naksa Day",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "PAL": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": "Six-Day War anniversary."
+    },
+    {
+      "date": "2026-06-10",
+      "type": "Gregorian",
+      "year_origin": 2014,
+      "name": "Fall of Mosul",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "SJ": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": "ISIS operational prelude."
+    },
+    {
+      "date": "~2026-06-16",
+      "type": "Hijri",
+      "year_origin": null,
+      "name": "1 Muharram 1448",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "PI": "ELEVATED",
+        "SJ": "MODERATE"
+      },
+      "lead_time_days": 14,
+      "notes": "Hijra anniversary; new-year framing for restoration narratives."
+    },
+    {
+      "date": "~2026-06-25",
+      "type": "Hijri",
+      "year_origin": null,
+      "name": "10 Muharram – Ashura",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SI": "ELEVATED",
+        "PI": "MODERATE"
+      },
+      "lead_time_days": 14,
+      "notes": "Core Shia commemoration; historical sectarian-attack flashpoint."
+    },
+    {
+      "date": "2026-06-29",
+      "type": "Gregorian",
+      "year_origin": 2014,
+      "name": "ISIS Caliphate declaration (12th anniv.)",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SJ": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": "Defining jihadist 'victory' moment."
+    },
+    {
+      "date": "2026-07-03",
+      "type": "Gregorian",
+      "year_origin": 2013,
+      "name": "Morsi ouster",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "MB": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": "Egyptian MB grievance."
+    },
+    {
+      "date": "2026-07-07",
+      "type": "Gregorian",
+      "year_origin": 2005,
+      "name": "London 7/7",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SJ": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": "UK-domestic benchmark."
+    },
+    {
+      "date": "2026-08-07",
+      "type": "Gregorian",
+      "year_origin": 1998,
+      "name": "East Africa embassy bombings",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SJ": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": "AQ coming-out operation."
+    },
+    {
+      "date": "2026-08-14",
+      "type": "Gregorian",
+      "year_origin": 2013,
+      "name": "Rabaa al-Adawiya dispersal",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "MB": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": "Defining contemporary MB grievance, globally commemorated."
+    },
+    {
+      "date": "2026-08-23",
+      "type": "Gregorian",
+      "year_origin": 1996,
+      "name": "Bin Laden Declaration of War",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "SJ": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": "First formal AQ casus belli."
+    },
+    {
+      "date": "2026-08-29",
+      "type": "Gregorian",
+      "year_origin": 1966,
+      "name": "Sayyid Qutb execution",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "MB": "ELEVATED",
+        "SJ": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": "Most-cited intellectual martyrdom in Sunni Islamist canon."
+    },
+    {
+      "date": "2026-09-11",
+      "type": "Gregorian",
+      "year_origin": 2001,
+      "name": "9/11 (25th anniv.)",
+      "vigilance_overall": "CRITICAL",
+      "vigilance_by_strand": {
+        "SJ": "CRITICAL",
+        "PI": "ELEVATED"
+      },
+      "lead_time_days": 30,
+      "notes": "25th-anniversary round-number elevation; defining global jihadist anniversary."
+    },
+    {
+      "date": "2026-09-22",
+      "type": "Gregorian",
+      "year_origin": 1980,
+      "name": "Iran-Iraq War start",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "SI": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": "Foundational to IRGC mythology."
+    },
+    {
+      "date": "2026-09-28",
+      "type": "Gregorian",
+      "year_origin": 2000,
+      "name": "Second Intifada begins",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "PAL": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": "Sharon Temple Mount visit anniversary."
+    },
+    {
+      "date": "2026-09-30",
+      "type": "Gregorian",
+      "year_origin": 2011,
+      "name": "Anwar al-Awlaki killed",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "SJ": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": "AQAP / Inspire generation anchor."
+    },
+    {
+      "date": "2026-10-06",
+      "type": "Gregorian",
+      "year_origin": 1981,
+      "name": "Sadat assassination",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SJ": "ELEVATED",
+        "MB": "MODERATE"
+      },
+      "lead_time_days": 14,
+      "notes": "Successful 'tyrannicide' template celebrated by jihadists."
+    },
+    {
+      "date": "2026-10-07",
+      "type": "Gregorian",
+      "year_origin": 2023,
+      "name": "Hamas Oct 7 attack (3rd anniv.)",
+      "vigilance_overall": "CRITICAL",
+      "vigilance_by_strand": {
+        "PAL": "CRITICAL",
+        "SI": "ELEVATED",
+        "PI": "MODERATE"
+      },
+      "lead_time_days": 30,
+      "notes": "Highest-tempo anniversary across Iran-aligned axis since 2023."
+    },
+    {
+      "date": "2026-10-12",
+      "type": "Gregorian",
+      "year_origin": 2000,
+      "name": "USS Cole / Bali bombings",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "SJ": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": "AQAP/JI dual anniversary."
+    },
+    {
+      "date": "2026-10-23",
+      "type": "Gregorian",
+      "year_origin": 1983,
+      "name": "Beirut barracks bombing",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SI": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": "Hezbollah operational origin."
+    },
+    {
+      "date": "2026-10-26",
+      "type": "Gregorian",
+      "year_origin": 2019,
+      "name": "Baghdadi killed (7th anniv.)",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "SJ": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": "ISIS leader martyrdom."
+    },
+    {
+      "date": "2026-10-29",
+      "type": "Gregorian",
+      "year_origin": 1923,
+      "name": "Turkish Republic proclaimed",
+      "vigilance_overall": "BASELINE",
+      "vigilance_by_strand": {
+        "PI": "BASELINE"
+      },
+      "lead_time_days": 3,
+      "notes": "Secularization grievance, restorationist literature."
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Gregorian",
+      "year_origin": 1922,
+      "name": "Ottoman Sultanate abolished",
+      "vigilance_overall": "BASELINE",
+      "vigilance_by_strand": {
+        "PI": "BASELINE"
+      },
+      "lead_time_days": 3,
+      "notes": "Procedural prelude to Caliphate's end."
+    },
+    {
+      "date": "2026-11-04",
+      "type": "Gregorian",
+      "year_origin": 1979,
+      "name": "US Embassy seizure, Tehran",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SI": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": "'National Day of the Fight Against Global Arrogance.'"
+    },
+    {
+      "date": "2026-11-13",
+      "type": "Gregorian",
+      "year_origin": 2015,
+      "name": "Paris attacks",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SJ": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": "ISIS external operations benchmark."
+    },
+    {
+      "date": "2026-11-20",
+      "type": "Gregorian",
+      "year_origin": 1979,
+      "name": "Grand Mosque seizure (47th anniv.)",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SJ": "ELEVATED",
+        "PI": "MODERATE"
+      },
+      "lead_time_days": 14,
+      "notes": "Foundational to Salafi-jihadist self-mythology."
+    },
+    {
+      "date": "2026-12-09",
+      "type": "Gregorian",
+      "year_origin": 1987,
+      "name": "First Intifada begins",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "PAL": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": "Hamas pre-formation context."
+    },
+    {
+      "date": "~2026-12-14",
+      "type": "Gregorian",
+      "year_origin": 1987,
+      "name": "Hamas founding",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "PAL": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": "Hamas organizational anniversary."
+    },
+    {
+      "date": "2026-12-24",
+      "type": "Gregorian",
+      "year_origin": 1979,
+      "name": "Soviet invasion of Afghanistan",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "SJ": "MODERATE",
+        "PI": "BASELINE"
+      },
+      "lead_time_days": 7,
+      "notes": "Catalyst for Arab-Afghan mobilization that produced AQ."
+    },
+    {
+      "date": "2027-01-03",
+      "type": "Gregorian",
+      "year_origin": 2020,
+      "name": "Soleimani / al-Muhandis killing (7th anniv.)",
+      "vigilance_overall": "CRITICAL",
+      "vigilance_by_strand": {
+        "SI": "CRITICAL",
+        "PAL": "ELEVATED",
+        "PI": "MODERATE"
+      },
+      "lead_time_days": 30,
+      "notes": "Sustained Axis-wide commemoration."
+    },
+    {
+      "date": "2027-02-01",
+      "type": "Gregorian",
+      "year_origin": 1979,
+      "name": "Khomeini's return",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SI": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": ""
+    },
+    {
+      "date": "2027-02-03",
+      "type": "Gregorian",
+      "year_origin": 2022,
+      "name": "al-Qurayshi killing (5th anniv.)",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "SJ": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": ""
+    },
+    {
+      "date": "2027-02-07/2027-03-09",
+      "type": "Hijri",
+      "year_origin": null,
+      "name": "Ramadan 1448 (sustained window)",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SJ": "ELEVATED",
+        "PI": "ELEVATED",
+        "SI": "MODERATE"
+      },
+      "lead_time_days": 14,
+      "notes": "Earlier shift this year stacks Ramadan with the Caliphate anniversary."
+    },
+    {
+      "date": "2027-02-11",
+      "type": "Gregorian",
+      "year_origin": 1979,
+      "name": "Islamic Revolution Victory",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SI": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": ""
+    },
+    {
+      "date": "2027-02-12",
+      "type": "Gregorian",
+      "year_origin": 1949,
+      "name": "Banna assassination",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "MB": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": ""
+    },
+    {
+      "date": "2027-02-15",
+      "type": "Gregorian",
+      "year_origin": 1989,
+      "name": "Soviet withdrawal from Afghanistan",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "SJ": "MODERATE",
+        "PI": "BASELINE"
+      },
+      "lead_time_days": 7,
+      "notes": ""
+    },
+    {
+      "date": "~2027-02-23/~2027-02-24",
+      "type": "Hijri",
+      "year_origin": null,
+      "name": "17 Ramadan – Battle of Badr",
+      "vigilance_overall": "CRITICAL",
+      "vigilance_by_strand": {
+        "SJ": "CRITICAL",
+        "PI": "ELEVATED"
+      },
+      "lead_time_days": 30,
+      "notes": "Lands within ~10 days of the Mar 3 Caliphate anniversary."
+    },
+    {
+      "date": "~2027-03-01/~2027-03-08",
+      "type": "Hijri",
+      "year_origin": null,
+      "name": "Last 10 nights of Ramadan / Laylat al-Qadr",
+      "vigilance_overall": "CRITICAL",
+      "vigilance_by_strand": {
+        "SJ": "CRITICAL",
+        "PI": "ELEVATED"
+      },
+      "lead_time_days": 30,
+      "notes": "Direct overlap with Mar 3 Caliphate anniversary - standout convergence."
+    },
+    {
+      "date": "2027-03-03",
+      "type": "Gregorian",
+      "year_origin": 1924,
+      "name": "Abolition of the Caliphate (103rd anniv.)",
+      "vigilance_overall": "CRITICAL",
+      "vigilance_by_strand": {
+        "SJ": "CRITICAL",
+        "PI": "CRITICAL",
+        "MB": "ELEVATED"
+      },
+      "lead_time_days": 30,
+      "notes": "2027 falls inside the last 10 nights of Ramadan window."
+    },
+    {
+      "date": "~2027-03-09",
+      "type": "Hijri",
+      "year_origin": null,
+      "name": "Eid al-Fitr (1 Shawwal 1448)",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "PI": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": ""
+    },
+    {
+      "date": "2027-03-11",
+      "type": "Gregorian",
+      "year_origin": 2004,
+      "name": "Madrid bombings",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SJ": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": ""
+    },
+    {
+      "date": "2027-03-22",
+      "type": "Gregorian",
+      "year_origin": 1928,
+      "name": "MB founding / Brussels attacks (2016)",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "MB": "ELEVATED",
+        "SJ": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": ""
+    },
+    {
+      "date": "2027-04-01",
+      "type": "Gregorian",
+      "year_origin": 1979,
+      "name": "Declaration of the Islamic Republic",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "SI": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": ""
+    },
+    {
+      "date": "2027-04-09",
+      "type": "Gregorian",
+      "year_origin": 2013,
+      "name": "ISIS announced",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "SJ": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": ""
+    },
+    {
+      "date": "2027-05-02",
+      "type": "Gregorian",
+      "year_origin": 2011,
+      "name": "Bin Laden killed (16th anniv.)",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "SJ": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": ""
+    },
+    {
+      "date": "2027-05-15",
+      "type": "Gregorian",
+      "year_origin": 1948,
+      "name": "Nakba Day",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "PAL": "ELEVATED",
+        "PI": "MODERATE",
+        "SI": "MODERATE"
+      },
+      "lead_time_days": 14,
+      "notes": ""
+    },
+    {
+      "date": "~2027-05-16/~2027-05-17",
+      "type": "Hijri",
+      "year_origin": null,
+      "name": "Eid al-Adha (10 Dhu al-Hijjah 1448)",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "PI": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": ""
+    },
+    {
+      "date": "2027-05-25",
+      "type": "Gregorian",
+      "year_origin": 2000,
+      "name": "Hezbollah Liberation Day",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "SI": "MODERATE",
+        "PAL": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": ""
+    },
+    {
+      "date": "2027-06-05",
+      "type": "Gregorian",
+      "year_origin": 1967,
+      "name": "Naksa Day",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "PAL": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": ""
+    },
+    {
+      "date": "~2027-06-06",
+      "type": "Hijri",
+      "year_origin": null,
+      "name": "1 Muharram 1449",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "PI": "ELEVATED",
+        "SJ": "MODERATE"
+      },
+      "lead_time_days": 14,
+      "notes": ""
+    },
+    {
+      "date": "2027-06-10",
+      "type": "Gregorian",
+      "year_origin": 2014,
+      "name": "Fall of Mosul",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "SJ": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": ""
+    },
+    {
+      "date": "~2027-06-15",
+      "type": "Hijri",
+      "year_origin": null,
+      "name": "10 Muharram – Ashura",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SI": "ELEVATED",
+        "PI": "MODERATE"
+      },
+      "lead_time_days": 14,
+      "notes": ""
+    },
+    {
+      "date": "2027-06-29",
+      "type": "Gregorian",
+      "year_origin": 2014,
+      "name": "ISIS Caliphate declaration (13th anniv.)",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SJ": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": ""
+    },
+    {
+      "date": "2027-07-03",
+      "type": "Gregorian",
+      "year_origin": 2013,
+      "name": "Morsi ouster",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "MB": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": ""
+    },
+    {
+      "date": "2027-07-07",
+      "type": "Gregorian",
+      "year_origin": 2005,
+      "name": "London 7/7",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SJ": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": ""
+    },
+    {
+      "date": "2027-08-07",
+      "type": "Gregorian",
+      "year_origin": 1998,
+      "name": "East Africa embassy bombings",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SJ": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": ""
+    },
+    {
+      "date": "2027-08-14",
+      "type": "Gregorian",
+      "year_origin": 2013,
+      "name": "Rabaa anniversary",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "MB": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": ""
+    },
+    {
+      "date": "2027-08-23",
+      "type": "Gregorian",
+      "year_origin": 1996,
+      "name": "Bin Laden Declaration of War",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "SJ": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": ""
+    },
+    {
+      "date": "2027-08-29",
+      "type": "Gregorian",
+      "year_origin": 1966,
+      "name": "Qutb execution",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "MB": "ELEVATED",
+        "SJ": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": ""
+    },
+    {
+      "date": "2027-09-11",
+      "type": "Gregorian",
+      "year_origin": 2001,
+      "name": "9/11 (26th anniv.)",
+      "vigilance_overall": "CRITICAL",
+      "vigilance_by_strand": {
+        "SJ": "CRITICAL",
+        "PI": "ELEVATED"
+      },
+      "lead_time_days": 30,
+      "notes": ""
+    },
+    {
+      "date": "2027-09-22",
+      "type": "Gregorian",
+      "year_origin": 1980,
+      "name": "Iran-Iraq War start",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "SI": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": ""
+    },
+    {
+      "date": "2027-09-28",
+      "type": "Gregorian",
+      "year_origin": 2000,
+      "name": "Second Intifada",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "PAL": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": ""
+    },
+    {
+      "date": "2027-09-30",
+      "type": "Gregorian",
+      "year_origin": 2011,
+      "name": "Awlaki killed",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "SJ": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": ""
+    },
+    {
+      "date": "2027-10-06",
+      "type": "Gregorian",
+      "year_origin": 1981,
+      "name": "Sadat assassination",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SJ": "ELEVATED",
+        "MB": "MODERATE"
+      },
+      "lead_time_days": 14,
+      "notes": ""
+    },
+    {
+      "date": "2027-10-07",
+      "type": "Gregorian",
+      "year_origin": 2023,
+      "name": "Hamas Oct 7 attack (4th anniv.)",
+      "vigilance_overall": "CRITICAL",
+      "vigilance_by_strand": {
+        "PAL": "CRITICAL",
+        "SI": "ELEVATED",
+        "PI": "MODERATE"
+      },
+      "lead_time_days": 30,
+      "notes": ""
+    },
+    {
+      "date": "2027-10-12",
+      "type": "Gregorian",
+      "year_origin": 2000,
+      "name": "USS Cole / Bali",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "SJ": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": ""
+    },
+    {
+      "date": "2027-10-23",
+      "type": "Gregorian",
+      "year_origin": 1983,
+      "name": "Beirut barracks bombing",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SI": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": ""
+    },
+    {
+      "date": "2027-10-26",
+      "type": "Gregorian",
+      "year_origin": 2019,
+      "name": "Baghdadi killed (8th anniv.)",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "SJ": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": ""
+    },
+    {
+      "date": "2027-10-29",
+      "type": "Gregorian",
+      "year_origin": 1923,
+      "name": "Turkish Republic proclaimed",
+      "vigilance_overall": "BASELINE",
+      "vigilance_by_strand": {
+        "PI": "BASELINE"
+      },
+      "lead_time_days": 3,
+      "notes": ""
+    },
+    {
+      "date": "2027-11-01",
+      "type": "Gregorian",
+      "year_origin": 1922,
+      "name": "Sultanate abolished",
+      "vigilance_overall": "BASELINE",
+      "vigilance_by_strand": {
+        "PI": "BASELINE"
+      },
+      "lead_time_days": 3,
+      "notes": ""
+    },
+    {
+      "date": "2027-11-04",
+      "type": "Gregorian",
+      "year_origin": 1979,
+      "name": "US Embassy seizure, Tehran",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SI": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": ""
+    },
+    {
+      "date": "2027-11-13",
+      "type": "Gregorian",
+      "year_origin": 2015,
+      "name": "Paris attacks",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SJ": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": ""
+    },
+    {
+      "date": "2027-11-20",
+      "type": "Gregorian",
+      "year_origin": 1979,
+      "name": "Grand Mosque seizure (48th anniv.)",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "SJ": "ELEVATED",
+        "PI": "MODERATE"
+      },
+      "lead_time_days": 14,
+      "notes": ""
+    },
+    {
+      "date": "2027-12-09",
+      "type": "Gregorian",
+      "year_origin": 1987,
+      "name": "First Intifada begins",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "PAL": "MODERATE"
+      },
+      "lead_time_days": 7,
+      "notes": ""
+    },
+    {
+      "date": "~2027-12-14",
+      "type": "Gregorian",
+      "year_origin": 1987,
+      "name": "Hamas founding",
+      "vigilance_overall": "ELEVATED",
+      "vigilance_by_strand": {
+        "PAL": "ELEVATED"
+      },
+      "lead_time_days": 14,
+      "notes": ""
+    },
+    {
+      "date": "2027-12-24",
+      "type": "Gregorian",
+      "year_origin": 1979,
+      "name": "Soviet invasion of Afghanistan",
+      "vigilance_overall": "MODERATE",
+      "vigilance_by_strand": {
+        "SJ": "MODERATE",
+        "PI": "BASELINE"
+      },
+      "lead_time_days": 7,
+      "notes": ""
+    }
+  ],
+  "compound_windows": [
+    {
+      "id": "CW-2026-01",
+      "year": 2026,
+      "label": "Late Feb – early Mar (Iran/MB/Caliphate stack)",
+      "start": "2026-02-11",
+      "end": "2026-03-06",
+      "level": "CRITICAL",
+      "anchor_dates": [
+        "2026-02-11",
+        "2026-02-12",
+        "2026-02-15",
+        "2026-02-17/2026-03-19",
+        "2026-03-03",
+        "~2026-03-05"
+      ],
+      "rationale": "Five-strand convergence: Iran revolution + Banna + Soviet withdrawal + Ramadan onset + Caliphate anniversary."
+    },
+    {
+      "id": "CW-2026-02",
+      "year": 2026,
+      "label": "Mid-late March (Ramadan tail / MB / Brussels)",
+      "start": "2026-03-13",
+      "end": "2026-03-22",
+      "level": "CRITICAL",
+      "anchor_dates": [
+        "~2026-03-13/2026-03-19",
+        "~2026-03-20",
+        "2026-03-22"
+      ],
+      "rationale": "Last 10 nights of Ramadan + Eid + MB founding/Brussels anniversary."
+    },
+    {
+      "id": "CW-2026-03",
+      "year": 2026,
+      "label": "Sep 11 – Oct 7 (Sustained High-Tempo)",
+      "start": "2026-09-11",
+      "end": "2026-10-07",
+      "level": "CRITICAL",
+      "anchor_dates": [
+        "2026-09-11",
+        "2026-09-22",
+        "2026-09-28",
+        "2026-09-30",
+        "2026-10-06",
+        "2026-10-07"
+      ],
+      "rationale": "Two CRITICAL anchors (9/11 25th, Oct 7 3rd) bracketing four secondary anniversaries. Highest-priority window of 2026."
+    },
+    {
+      "id": "CW-2026-04",
+      "year": 2026,
+      "label": "Late Oct – Mid-Nov (Multi-strand)",
+      "start": "2026-10-23",
+      "end": "2026-11-13",
+      "level": "ELEVATED",
+      "anchor_dates": [
+        "2026-10-23",
+        "2026-10-26",
+        "2026-10-29",
+        "2026-11-01",
+        "2026-11-04",
+        "2026-11-13"
+      ],
+      "rationale": "Six anniversaries in three weeks; sustained ELEVATED with internal spikes."
+    },
+    {
+      "id": "CW-2027-01",
+      "year": 2027,
+      "label": "Late Feb – Early Mar (Ramadan/Caliphate Convergence) - STANDOUT",
+      "start": "2027-02-23",
+      "end": "2027-03-09",
+      "level": "CRITICAL",
+      "anchor_dates": [
+        "~2027-02-23/~2027-02-24",
+        "~2027-03-01/~2027-03-08",
+        "2027-03-03",
+        "~2027-03-09"
+      ],
+      "rationale": "Most operationally significant convergence in either year: 17 Ramadan + Laylat al-Qadr window + Caliphate grievance anniversary in same ~10-day window. Dedicated watch product warranted."
+    },
+    {
+      "id": "CW-2027-02",
+      "year": 2027,
+      "label": "Sep 11 – Oct 7 (Sustained High-Tempo)",
+      "start": "2027-09-11",
+      "end": "2027-10-07",
+      "level": "CRITICAL",
+      "anchor_dates": [
+        "2027-09-11",
+        "2027-09-22",
+        "2027-09-28",
+        "2027-09-30",
+        "2027-10-06",
+        "2027-10-07"
+      ],
+      "rationale": "Same structure as 2026; sustained elevated-tempo zone."
+    },
+    {
+      "id": "CW-2027-03",
+      "year": 2027,
+      "label": "Late Oct – Mid-Nov (Multi-strand)",
+      "start": "2027-10-23",
+      "end": "2027-11-13",
+      "level": "ELEVATED",
+      "anchor_dates": [
+        "2027-10-23",
+        "2027-10-26",
+        "2027-10-29",
+        "2027-11-01",
+        "2027-11-04",
+        "2027-11-13"
+      ],
+      "rationale": "Six anniversaries in three weeks."
+    }
+  ]
+}

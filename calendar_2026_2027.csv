@@ -1,0 +1,95 @@
+date,type,year_origin,name,vigilance_overall,vigilance_SJ,vigilance_SI,vigilance_PAL,vigilance_MB,vigilance_PI,lead_time_days,notes
+2026-01-03,Gregorian,2020,Soleimani / al-Muhandis killing (6th anniv.),CRITICAL,,CRITICAL,ELEVATED,,MODERATE,30,Highest-tempo recent martyrdom anniversary in Axis ecosystem; Iraqi PMF / IRGC commemorate annually.
+2026-02-01,Gregorian,1979,Khomeini's return to Iran,ELEVATED,,ELEVATED,,,,14,Anchor of Iranian revolutionary identity.
+2026-02-03,Gregorian,2022,al-Qurayshi killing (4th anniv.),MODERATE,MODERATE,,,,,7,ISIS leader martyrdom; secondary surge driver.
+2026-02-11,Gregorian,1979,Victory of the Islamic Revolution,ELEVATED,,ELEVATED,,,,14,22 Bahman; Iran national day.
+2026-02-12,Gregorian,1949,Hassan al-Banna assassination,MODERATE,,,,MODERATE,,7,MB founder martyrdom.
+2026-02-15,Gregorian,1989,Soviet withdrawal from Afghanistan,MODERATE,MODERATE,,,,BASELINE,7,Founding 'victory' of the modern jihadist movement.
+2026-02-17/2026-03-19,Hijri,,Ramadan 1447 (sustained window),ELEVATED,ELEVATED,MODERATE,,,ELEVATED,14,Month-long heightened tempo; jihadist groups historically time operations within.
+~2026-03-05,Hijri,,17 Ramadan – Battle of Badr,CRITICAL,CRITICAL,,,,ELEVATED,30,Theological license for offensive operations during Ramadan.
+2026-03-03,Gregorian,1924,Abolition of the Caliphate (102nd anniv.),CRITICAL,CRITICAL,,,ELEVATED,CRITICAL,30,Single most-cited modern grievance across Sunni Islamist literature.
+2026-03-11,Gregorian,2004,Madrid bombings,ELEVATED,ELEVATED,,,,,14,EU-domestic AQ-inspired benchmark.
+~2026-03-13/2026-03-19,Hijri,,Last 10 nights of Ramadan / Laylat al-Qadr,CRITICAL,CRITICAL,,,,ELEVATED,30,Historically elevated operational tempo; ISIS has weaponized this window.
+~2026-03-20,Hijri,,Eid al-Fitr (1 Shawwal 1447),MODERATE,,,,,MODERATE,7,End of Ramadan; sometimes operational deadline.
+2026-03-22,Gregorian,1928,MB founding (1928) / Brussels attacks (2016),ELEVATED,ELEVATED,,,ELEVATED,,14,Dual-anniversary date; MB founding + ISIS EU operation.
+2026-04-01,Gregorian,1979,Declaration of the Islamic Republic,MODERATE,,MODERATE,,,,7,Iran institutional anniversary.
+2026-04-09,Gregorian,2013,ISIS public split / announcement,MODERATE,MODERATE,,,,,7,ISIS organizational anniversary.
+2026-05-02,Gregorian,2011,Bin Laden killed (15th anniv.),ELEVATED,ELEVATED,,,,,14,AQ generational martyrdom; 15th anniv. is round-number salient.
+2026-05-15,Gregorian,1948,Nakba Day,ELEVATED,,MODERATE,ELEVATED,,MODERATE,14,Mobilization activity recurs annually.
+2026-05-25,Gregorian,2000,Hezbollah Liberation Day,MODERATE,,MODERATE,MODERATE,,,7,Israeli withdrawal from southern Lebanon.
+~2026-05-26/~2026-05-27,Hijri,,Eid al-Adha (10 Dhu al-Hijjah 1447),ELEVATED,,,,,ELEVATED,14,Sacrifice symbolism; recurring framing device.
+2026-06-05,Gregorian,1967,Naksa Day,MODERATE,,,MODERATE,,,7,Six-Day War anniversary.
+2026-06-10,Gregorian,2014,Fall of Mosul,MODERATE,MODERATE,,,,,7,ISIS operational prelude.
+~2026-06-16,Hijri,,1 Muharram 1448,ELEVATED,MODERATE,,,,ELEVATED,14,Hijra anniversary; new-year framing for restoration narratives.
+~2026-06-25,Hijri,,10 Muharram – Ashura,ELEVATED,,ELEVATED,,,MODERATE,14,Core Shia commemoration; historical sectarian-attack flashpoint.
+2026-06-29,Gregorian,2014,ISIS Caliphate declaration (12th anniv.),ELEVATED,ELEVATED,,,,,14,Defining jihadist 'victory' moment.
+2026-07-03,Gregorian,2013,Morsi ouster,MODERATE,,,,MODERATE,,7,Egyptian MB grievance.
+2026-07-07,Gregorian,2005,London 7/7,ELEVATED,ELEVATED,,,,,14,UK-domestic benchmark.
+2026-08-07,Gregorian,1998,East Africa embassy bombings,ELEVATED,ELEVATED,,,,,14,AQ coming-out operation.
+2026-08-14,Gregorian,2013,Rabaa al-Adawiya dispersal,ELEVATED,,,,ELEVATED,,14,"Defining contemporary MB grievance, globally commemorated."
+2026-08-23,Gregorian,1996,Bin Laden Declaration of War,MODERATE,MODERATE,,,,,7,First formal AQ casus belli.
+2026-08-29,Gregorian,1966,Sayyid Qutb execution,ELEVATED,ELEVATED,,,ELEVATED,,14,Most-cited intellectual martyrdom in Sunni Islamist canon.
+2026-09-11,Gregorian,2001,9/11 (25th anniv.),CRITICAL,CRITICAL,,,,ELEVATED,30,25th-anniversary round-number elevation; defining global jihadist anniversary.
+2026-09-22,Gregorian,1980,Iran-Iraq War start,MODERATE,,MODERATE,,,,7,Foundational to IRGC mythology.
+2026-09-28,Gregorian,2000,Second Intifada begins,MODERATE,,,MODERATE,,,7,Sharon Temple Mount visit anniversary.
+2026-09-30,Gregorian,2011,Anwar al-Awlaki killed,MODERATE,MODERATE,,,,,7,AQAP / Inspire generation anchor.
+2026-10-06,Gregorian,1981,Sadat assassination,ELEVATED,ELEVATED,,,MODERATE,,14,Successful 'tyrannicide' template celebrated by jihadists.
+2026-10-07,Gregorian,2023,Hamas Oct 7 attack (3rd anniv.),CRITICAL,,ELEVATED,CRITICAL,,MODERATE,30,Highest-tempo anniversary across Iran-aligned axis since 2023.
+2026-10-12,Gregorian,2000,USS Cole / Bali bombings,MODERATE,MODERATE,,,,,7,AQAP/JI dual anniversary.
+2026-10-23,Gregorian,1983,Beirut barracks bombing,ELEVATED,,ELEVATED,,,,14,Hezbollah operational origin.
+2026-10-26,Gregorian,2019,Baghdadi killed (7th anniv.),MODERATE,MODERATE,,,,,7,ISIS leader martyrdom.
+2026-10-29,Gregorian,1923,Turkish Republic proclaimed,BASELINE,,,,,BASELINE,3,"Secularization grievance, restorationist literature."
+2026-11-01,Gregorian,1922,Ottoman Sultanate abolished,BASELINE,,,,,BASELINE,3,Procedural prelude to Caliphate's end.
+2026-11-04,Gregorian,1979,"US Embassy seizure, Tehran",ELEVATED,,ELEVATED,,,,14,'National Day of the Fight Against Global Arrogance.'
+2026-11-13,Gregorian,2015,Paris attacks,ELEVATED,ELEVATED,,,,,14,ISIS external operations benchmark.
+2026-11-20,Gregorian,1979,Grand Mosque seizure (47th anniv.),ELEVATED,ELEVATED,,,,MODERATE,14,Foundational to Salafi-jihadist self-mythology.
+2026-12-09,Gregorian,1987,First Intifada begins,MODERATE,,,MODERATE,,,7,Hamas pre-formation context.
+~2026-12-14,Gregorian,1987,Hamas founding,ELEVATED,,,ELEVATED,,,14,Hamas organizational anniversary.
+2026-12-24,Gregorian,1979,Soviet invasion of Afghanistan,MODERATE,MODERATE,,,,BASELINE,7,Catalyst for Arab-Afghan mobilization that produced AQ.
+2027-01-03,Gregorian,2020,Soleimani / al-Muhandis killing (7th anniv.),CRITICAL,,CRITICAL,ELEVATED,,MODERATE,30,Sustained Axis-wide commemoration.
+2027-02-01,Gregorian,1979,Khomeini's return,ELEVATED,,ELEVATED,,,,14,
+2027-02-03,Gregorian,2022,al-Qurayshi killing (5th anniv.),MODERATE,MODERATE,,,,,7,
+2027-02-07/2027-03-09,Hijri,,Ramadan 1448 (sustained window),ELEVATED,ELEVATED,MODERATE,,,ELEVATED,14,Earlier shift this year stacks Ramadan with the Caliphate anniversary.
+2027-02-11,Gregorian,1979,Islamic Revolution Victory,ELEVATED,,ELEVATED,,,,14,
+2027-02-12,Gregorian,1949,Banna assassination,MODERATE,,,,MODERATE,,7,
+2027-02-15,Gregorian,1989,Soviet withdrawal from Afghanistan,MODERATE,MODERATE,,,,BASELINE,7,
+~2027-02-23/~2027-02-24,Hijri,,17 Ramadan – Battle of Badr,CRITICAL,CRITICAL,,,,ELEVATED,30,Lands within ~10 days of the Mar 3 Caliphate anniversary.
+~2027-03-01/~2027-03-08,Hijri,,Last 10 nights of Ramadan / Laylat al-Qadr,CRITICAL,CRITICAL,,,,ELEVATED,30,Direct overlap with Mar 3 Caliphate anniversary - standout convergence.
+2027-03-03,Gregorian,1924,Abolition of the Caliphate (103rd anniv.),CRITICAL,CRITICAL,,,ELEVATED,CRITICAL,30,2027 falls inside the last 10 nights of Ramadan window.
+~2027-03-09,Hijri,,Eid al-Fitr (1 Shawwal 1448),MODERATE,,,,,MODERATE,7,
+2027-03-11,Gregorian,2004,Madrid bombings,ELEVATED,ELEVATED,,,,,14,
+2027-03-22,Gregorian,1928,MB founding / Brussels attacks (2016),ELEVATED,ELEVATED,,,ELEVATED,,14,
+2027-04-01,Gregorian,1979,Declaration of the Islamic Republic,MODERATE,,MODERATE,,,,7,
+2027-04-09,Gregorian,2013,ISIS announced,MODERATE,MODERATE,,,,,7,
+2027-05-02,Gregorian,2011,Bin Laden killed (16th anniv.),MODERATE,MODERATE,,,,,7,
+2027-05-15,Gregorian,1948,Nakba Day,ELEVATED,,MODERATE,ELEVATED,,MODERATE,14,
+~2027-05-16/~2027-05-17,Hijri,,Eid al-Adha (10 Dhu al-Hijjah 1448),ELEVATED,,,,,ELEVATED,14,
+2027-05-25,Gregorian,2000,Hezbollah Liberation Day,MODERATE,,MODERATE,MODERATE,,,7,
+2027-06-05,Gregorian,1967,Naksa Day,MODERATE,,,MODERATE,,,7,
+~2027-06-06,Hijri,,1 Muharram 1449,ELEVATED,MODERATE,,,,ELEVATED,14,
+2027-06-10,Gregorian,2014,Fall of Mosul,MODERATE,MODERATE,,,,,7,
+~2027-06-15,Hijri,,10 Muharram – Ashura,ELEVATED,,ELEVATED,,,MODERATE,14,
+2027-06-29,Gregorian,2014,ISIS Caliphate declaration (13th anniv.),ELEVATED,ELEVATED,,,,,14,
+2027-07-03,Gregorian,2013,Morsi ouster,MODERATE,,,,MODERATE,,7,
+2027-07-07,Gregorian,2005,London 7/7,ELEVATED,ELEVATED,,,,,14,
+2027-08-07,Gregorian,1998,East Africa embassy bombings,ELEVATED,ELEVATED,,,,,14,
+2027-08-14,Gregorian,2013,Rabaa anniversary,ELEVATED,,,,ELEVATED,,14,
+2027-08-23,Gregorian,1996,Bin Laden Declaration of War,MODERATE,MODERATE,,,,,7,
+2027-08-29,Gregorian,1966,Qutb execution,ELEVATED,ELEVATED,,,ELEVATED,,14,
+2027-09-11,Gregorian,2001,9/11 (26th anniv.),CRITICAL,CRITICAL,,,,ELEVATED,30,
+2027-09-22,Gregorian,1980,Iran-Iraq War start,MODERATE,,MODERATE,,,,7,
+2027-09-28,Gregorian,2000,Second Intifada,MODERATE,,,MODERATE,,,7,
+2027-09-30,Gregorian,2011,Awlaki killed,MODERATE,MODERATE,,,,,7,
+2027-10-06,Gregorian,1981,Sadat assassination,ELEVATED,ELEVATED,,,MODERATE,,14,
+2027-10-07,Gregorian,2023,Hamas Oct 7 attack (4th anniv.),CRITICAL,,ELEVATED,CRITICAL,,MODERATE,30,
+2027-10-12,Gregorian,2000,USS Cole / Bali,MODERATE,MODERATE,,,,,7,
+2027-10-23,Gregorian,1983,Beirut barracks bombing,ELEVATED,,ELEVATED,,,,14,
+2027-10-26,Gregorian,2019,Baghdadi killed (8th anniv.),MODERATE,MODERATE,,,,,7,
+2027-10-29,Gregorian,1923,Turkish Republic proclaimed,BASELINE,,,,,BASELINE,3,
+2027-11-01,Gregorian,1922,Sultanate abolished,BASELINE,,,,,BASELINE,3,
+2027-11-04,Gregorian,1979,"US Embassy seizure, Tehran",ELEVATED,,ELEVATED,,,,14,
+2027-11-13,Gregorian,2015,Paris attacks,ELEVATED,ELEVATED,,,,,14,
+2027-11-20,Gregorian,1979,Grand Mosque seizure (48th anniv.),ELEVATED,ELEVATED,,,,MODERATE,14,
+2027-12-09,Gregorian,1987,First Intifada begins,MODERATE,,,MODERATE,,,7,
+~2027-12-14,Gregorian,1987,Hamas founding,ELEVATED,,,ELEVATED,,,14,
+2027-12-24,Gregorian,1979,Soviet invasion of Afghanistan,MODERATE,MODERATE,,,,BASELINE,7,
