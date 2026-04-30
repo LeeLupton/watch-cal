@@ -88,6 +88,39 @@ function addDays(d, n) {
   return r;
 }
 
+function dateKeyWithYear(value, year) {
+  if (value.includes('~')) return null;
+  const parts = value.split('/');
+  const retargeted = [];
+  for (const part of parts) {
+    const clean = part.replace(/^~/, '');
+    const [, month, day] = clean.split('-').map(Number);
+    if (!month || !day) return null;
+    retargeted.push(`${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`);
+  }
+  return retargeted.join('/');
+}
+
+function anniversarySuffix(value) {
+  if (value % 100 >= 10 && value % 100 <= 20) return 'th';
+  return ({ 1: 'st', 2: 'nd', 3: 'rd' }[value % 10]) || 'th';
+}
+
+function retargetAnniversaryName(name, originYear, targetYear) {
+  if (!originYear) return name;
+  const anniversary = targetYear - Number(originYear);
+  if (anniversary <= 0) return name;
+  return name.replace(/\d+(st|nd|rd|th) anniv\./, `${anniversary}${anniversarySuffix(anniversary)} anniv.`);
+}
+
+function projectionStem(name) {
+  return String(name || '')
+    .replace(/\s*\(\d+(st|nd|rd|th) anniv\.\)/i, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .toLowerCase();
+}
+
 function daysBetween(a, b) {
   return Math.round((b - a) / 86400000);
 }
@@ -98,6 +131,85 @@ function formatDate(d) {
 
 function monthName(d) {
   return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+}
+
+function buildHistoricalCalendarData(data, startKey, endKey) {
+  if (!startKey || !endKey) return data;
+
+  const startYear = Number(startKey.slice(0, 4));
+  const endYear = Number(endKey.slice(0, 4));
+  const events = [...(data.events || [])];
+  const compoundWindows = [...(data.compound_windows || [])];
+
+  const baseEvents = new Map();
+  const existingEvents = new Set();
+  for (const ev of data.events || []) {
+    if (ev.type !== 'Gregorian' || ev.date.includes('~') || ev.date.includes('/')) continue;
+    const sourceDate = parseDate(ev.date);
+    const key = `${sourceDate.getMonth() + 1}-${sourceDate.getDate()}-${projectionStem(ev.name)}`;
+    existingEvents.add(`${ev.date}|${projectionStem(ev.name)}`);
+    if (!baseEvents.has(key) || parseDate(baseEvents.get(key).date) > sourceDate) {
+      baseEvents.set(key, ev);
+    }
+  }
+
+  for (const ev of baseEvents.values()) {
+    const stem = projectionStem(ev.name);
+    for (let year = startYear; year <= endYear; year++) {
+      const date = dateKeyWithYear(ev.date, year);
+      if (!date || existingEvents.has(`${date}|${stem}`)) continue;
+
+      const clone = {
+        ...ev,
+        date,
+        name: retargetAnniversaryName(ev.name, ev.year_origin, year),
+        historical_projection: true,
+        projected_from_date: ev.date,
+      };
+      events.push(clone);
+      existingEvents.add(`${date}|${stem}`);
+    }
+  }
+
+  const baseWindows = new Map();
+  const existingWindows = new Set();
+  for (const cw of data.compound_windows || []) {
+    if (String(cw.start).includes('~') || String(cw.end).includes('~')) continue;
+    const sourceStart = parseDate(cw.start);
+    const sourceEnd = parseDate(cw.end);
+    if ((cw.anchor_dates || []).some(anchor => !dateKeyWithYear(anchor, sourceStart.getFullYear()))) continue;
+    const labelStem = String(cw.label || '').replace(/\b20\d{2}\b/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+    const key = `${sourceStart.getMonth() + 1}-${sourceStart.getDate()}-${sourceEnd.getMonth() + 1}-${sourceEnd.getDate()}-${labelStem}`;
+    existingWindows.add(`${cw.start}|${cw.end}|${labelStem}`);
+    if (!baseWindows.has(key) || parseDate(baseWindows.get(key).start) > sourceStart) {
+      baseWindows.set(key, cw);
+    }
+  }
+
+  for (const cw of baseWindows.values()) {
+    const labelStem = String(cw.label || '').replace(/\b20\d{2}\b/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+    for (let year = startYear; year <= endYear; year++) {
+      const start = dateKeyWithYear(cw.start, year);
+      const end = dateKeyWithYear(cw.end, year);
+      if (!start || !end || existingWindows.has(`${start}|${end}|${labelStem}`)) continue;
+      const id = String(cw.id || 'CW').replace(/\b20\d{2}\b/g, String(year));
+      compoundWindows.push({
+        ...cw,
+        id: id === cw.id ? `${cw.id}-${year}` : id,
+        year,
+        start,
+        end,
+        label: String(cw.label || '').replace(/\b20\d{2}\b/g, String(year)),
+        rationale: String(cw.rationale || '').replace(/\b20\d{2}\b/g, String(year)),
+        anchor_dates: (cw.anchor_dates || []).map(anchor => dateKeyWithYear(anchor, year)).filter(Boolean),
+        historical_projection: true,
+        projected_from_id: cw.id,
+      });
+      existingWindows.add(`${start}|${end}|${labelStem}`);
+    }
+  }
+
+  return { ...data, events, compound_windows: compoundWindows };
 }
 
 /* =========================================================
@@ -199,6 +311,8 @@ let state = {
   strandIndex: null, // per-strand day maps (built lazily below)
   reuters: null,
   reutersByDate: {},
+  historicalStartKey: null,
+  historicalEndKey: null,
   year: today.getFullYear(),
   month: today.getMonth(),
   selectedKey: toKey(today),
@@ -264,10 +378,20 @@ function getDayLevel(key) {
 }
 
 function getHistoricalDayLevel(key) {
+  if (state.historicalStartKey && key < state.historicalStartKey) return 'NONE';
   if (state.activeStrand === 'overall') {
     return state.dayIndex[key]?.level || 'NONE';
   }
   return state.strandIndex[state.activeStrand]?.[key]?.level || 'NONE';
+}
+
+function emptyDayEntry() {
+  return { level: 'NONE', anchors: [], postures: [], windows: [], strandLevels: {} };
+}
+
+function getHistoricalDayEntry(key) {
+  if (state.historicalStartKey && key < state.historicalStartKey) return emptyDayEntry();
+  return state.dayIndex[key] || emptyDayEntry();
 }
 
 /* =========================================================
@@ -438,8 +562,8 @@ function updateAlertBar(dayEntry, lvl) {
 
 function renderDetail(key) {
   const date = parseDate(key);
-  const entry = state.dayIndex[key] || { level: 'NONE', anchors: [], postures: [], windows: [], strandLevels: {} };
-  const lvl = getDayLevel(key);
+  const entry = getHistoricalDayEntry(key);
+  const lvl = getHistoricalDayLevel(key);
 
   document.getElementById('detail-date').textContent = formatDate(date);
 
@@ -632,8 +756,8 @@ function renderMonthGrid() {
   for (let d = 1; d <= daysInMonth; d++) {
     const cellDate = new Date(year, month, d);
     const key = toKey(cellDate);
-    const lvl = getDayLevel(key);
-    const entry = state.dayIndex[key] || { anchors: [], postures: [], windows: [] };
+    const lvl = getHistoricalDayLevel(key);
+    const entry = getHistoricalDayEntry(key);
     const isToday = key === todayKey;
     const isSelected = key === state.selectedKey;
     const isAnchor = entry.anchors.length > 0;
@@ -701,7 +825,7 @@ function renderYearStrip() {
         html += `<div class="ys-cell empty"></div>`;
       } else {
         const key = `${state.year}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-        const lvl = getDayLevel(key);
+        const lvl = getHistoricalDayLevel(key);
         const isToday = key === todayKey;
         const reutersCount = getReutersItems(key).length;
         html += `<div class="ys-cell${isToday ? ' today' : ''}${reutersCount ? ' has-reuters' : ''}" data-level="${lvl}" data-key="${key}" data-reuters-count="${reutersCount || ''}" title="${key}${reutersCount ? ` · ${reutersCount} Reuters item${reutersCount !== 1 ? 's' : ''}` : ''}"></div>`;
@@ -796,7 +920,7 @@ function renderAll() {
   renderMonthGrid();
   renderYearStrip();
   renderDetail(state.selectedKey);
-  renderStandingOrders(getDayLevel(state.selectedKey));
+  renderStandingOrders(getHistoricalDayLevel(state.selectedKey));
 }
 
 /* =========================================================
@@ -892,11 +1016,13 @@ function renderMeta(data) {
     return;
   }
 
-  state.data = data;
-  state.dayIndex = buildDayIndex(data);
-  state.strandIndex = buildStrandIndex(state.dayIndex);
   state.reuters = window.REUTERS_CORRELATIONS || { items: [] };
   state.reutersByDate = buildReutersIndex(state.reuters);
+  state.historicalStartKey = state.reuters.start_date || null;
+  state.historicalEndKey = state.reuters.as_of || toKey(today);
+  state.data = buildHistoricalCalendarData(data, state.historicalStartKey, state.historicalEndKey);
+  state.dayIndex = buildDayIndex(state.data);
+  state.strandIndex = buildStrandIndex(state.dayIndex);
 
   renderMeta(data);
   wireControls();

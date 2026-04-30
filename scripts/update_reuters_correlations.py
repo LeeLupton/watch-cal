@@ -661,7 +661,6 @@ def parse_article_node(node: ET.Element) -> dict | None:
         return None
     if is_localized_url(url):
         return None
-
     title = child_text(node, "news:news/news:title") or title_from_url(url)
     publication_value = child_text(node, "news:news/news:publication_date") or child_text(node, "sm:lastmod")
     published_at = parse_datetime(publication_value)
